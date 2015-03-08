@@ -9,6 +9,17 @@ Rails.application.routes.draw do
   #    mount_devise_token_auth_for 'User', at: 'auth'
   #  end
   #end
+  mount_devise_token_auth_for 'Coach', at: 'coach_auth'
+
+  mount_devise_token_auth_for 'Company', at: 'company_auth'
+  as :company do
+    # Define routes for Company within this block.
+  end
+  as :coach do
+    # Define routes for Coach within this block.
+    # get 'demo/admins_only', to: 'demo#admins_only'
+  end
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
