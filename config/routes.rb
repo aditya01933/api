@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'welcome/index'
+  root 'welcome#index'
   #devise_for :users
   mount_devise_token_auth_for 'User', at: 'auth'
   # token auth routes available at /api/v1/auth
