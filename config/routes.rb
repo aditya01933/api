@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  mount RailsAdmin::Engine => '/console', as: 'rails_admin'
+  devise_for :admins
+
   get 'welcome/index'
   root 'welcome#index'
   #devise_for :users
