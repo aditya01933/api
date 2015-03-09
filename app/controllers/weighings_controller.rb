@@ -16,31 +16,30 @@ class WeighingsController < ApplicationController
   def create
     @weighing = Weighing.new(weighing_params)
     @weighing.user_id = current_user.id
-    respond_to do |format|
-      if @weighing.save
-        format.json { render :show, status: :created, location: @weighing }
-      else
-        format.json { render json: @weighing.errors, status: :unprocessable_entity }
-      end
+
+    if @weighing.save
+      render :show, status: :created, location: @weighing
+    else
+      render json: {success: false,  errors: @weighing.errors, status: :unprocessable_entity}
     end
   end
 
   # PATCH/PUT /weighings/1
   def update
-    respond_to do |format|
-      if @weighing.update(weighing_params)
-        format.json { render :show, status: :ok, location: @weighing }
-      else
-        format.json { render json: @weighing.errors, status: :unprocessable_entity }
-      end
+    if @weighing.update(weighing_params)
+      render :show, status: :ok, location: @weighing
+    else
+      render json: {success: false,  errors: @weighing.errors, status: :unprocessable_entity}
     end
   end
 
   # DELETE /weighings/1
   def destroy
-    @weighing.destroy
-    respond_to do |format|
-      format.json { head :no_content }
+    @weighing = Weighing.find(params[:id])
+    if @weighing.destroy
+      render json: {success: true}, status: :ok, head: :no_content
+    else
+      render json: {success: false,  errors: @weighing.errors, status: :unprocessable_entity}
     end
   end
 
@@ -48,6 +47,8 @@ class WeighingsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_weighing
       @weighing = Weighing.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      render_404
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
@@ -61,12 +62,14 @@ class WeighingsController < ApplicationController
 
     def can_change?
       @can_change = @weighing.user_id == current_user.id
-      if !@can_change
-        render json: {
-          success: false,
-          errors: ["weighing not found"]
-        }, status: 404
-      end
+      render_404 if !@can_change
       return @can_change
+    end
+
+    def render_404
+      render json: {
+        success: false,
+        errors: ["weighing not found"]
+      }, status: 404
     end
 end
