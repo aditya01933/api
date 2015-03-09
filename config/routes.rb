@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   #end
 
   as :user do
-    get 'demo/admins_only', to: 'demo#admins_only'
+    #get 'demo/admins_only', to: 'demo#admins_only'
   end
 
   as :company do

@@ -130,7 +130,6 @@ ActiveRecord::Schema.define(version: 20150309111534) do
     t.float    "bone_mass"
     t.float    "viscerial_fat"
     t.text     "comment"
-    t.datetime "added_at"
     t.string   "image"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
