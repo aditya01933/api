@@ -1,7 +1,7 @@
 class WeighingsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_weighing, only: [:show, :edit, :update, :destroy]
-  before_action :can_change?,  only: [:show, :edit, :update, :destroy]
+  before_action :set_weighing, only: [:show, :update, :destroy]
+  before_action :can_change?,  only: [:show, :update, :destroy]
 
   def index
     @weighings = Weighing.where('user_id = ?', current_user.id)

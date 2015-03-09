@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150309111534) do
+ActiveRecord::Schema.define(version: 20150309171724) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -88,6 +88,21 @@ ActiveRecord::Schema.define(version: 20150309111534) do
   add_index "companies", ["email"], name: "index_companies_on_email"
   add_index "companies", ["reset_password_token"], name: "index_companies_on_reset_password_token", unique: true
   add_index "companies", ["uid", "provider"], name: "index_companies_on_uid_and_provider", unique: true
+
+  create_table "user_data", force: :cascade do |t|
+    t.integer  "user_id"
+    t.datetime "birthday"
+    t.decimal  "heigh"
+    t.integer  "country"
+    t.string   "sex"
+    t.string   "body_frame"
+    t.string   "weigh_unit"
+    t.string   "heigh_unit"
+    t.string   "energy_unit"
+    t.string   "lifestyle"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "provider",                            null: false

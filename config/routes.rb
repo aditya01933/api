@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :user_data
+
   resources :weighings
 
   mount RailsAdmin::Engine => '/console', as: 'rails_admin'
