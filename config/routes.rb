@@ -1,8 +1,4 @@
 Rails.application.routes.draw do
-  resources :user_data
-
-  resources :weighings
-
   mount RailsAdmin::Engine => '/console', as: 'rails_admin'
   devise_for :admins
   root 'welcome#index'
@@ -17,9 +13,9 @@ Rails.application.routes.draw do
   #  end
   #end
 
-  as :user do
-    #get 'demo/admins_only', to: 'demo#admins_only'
-  end
+
+  resources :weighings, :only => [:index, :create, :update, :destroy, :show]
+  resources :user_data, :only => [:create, :update, :show]
 
   as :company do
     # Define routes for Company within this block.

@@ -4,6 +4,6 @@ class User < ActiveRecord::Base
           :recoverable, :rememberable, :trackable, :validatable,
           :omniauthable
   include DeviseTokenAuth::Concerns::User
-  has_many :weighings,  dependent: :destroy
-  has_many :user_data,  dependent: :destroy
+  has_many :weighings,   dependent: :destroy
+  has_one  :user_datum,  dependent: :destroy
 end
