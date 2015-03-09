@@ -1,6 +1,7 @@
 class WeighingsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_weighing, only: [:show, :edit, :update, :destroy]
+  before_action :can_change?,  only: [:show, :edit, :update, :destroy]
 
   def index
     @weighings = Weighing.where('user_id = ?', current_user.id)
@@ -8,14 +9,7 @@ class WeighingsController < ApplicationController
   end
 
   def show
-    if @weighing.user_id == current_user.id
-      render "weighings/show"
-    else
-      render json: {
-        success: false,
-        errors: ["weighing not found"]
-      }, status: 404
-    end
+    render "weighings/show"
   end
 
   # POST /weighings
@@ -32,14 +26,11 @@ class WeighingsController < ApplicationController
   end
 
   # PATCH/PUT /weighings/1
-  # PATCH/PUT /weighings/1.json
   def update
     respond_to do |format|
       if @weighing.update(weighing_params)
-        format.html { redirect_to @weighing, notice: 'Weighing was successfully updated.' }
         format.json { render :show, status: :ok, location: @weighing }
       else
-        format.html { render :edit }
         format.json { render json: @weighing.errors, status: :unprocessable_entity }
       end
     end
@@ -66,5 +57,16 @@ class WeighingsController < ApplicationController
           :basal_metabolic_rate, :metabolic_age, :bone_mass, :viscerial_fat,
           :comment, :image, :created_at, :updated_at
       )
+    end
+
+    def can_change?
+      @can_change = @weighing.user_id == current_user.id
+      if !@can_change
+        render json: {
+          success: false,
+          errors: ["weighing not found"]
+        }, status: 404
+      end
+      return @can_change
     end
 end
