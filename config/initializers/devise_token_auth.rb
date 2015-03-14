@@ -8,7 +8,8 @@ DeviseTokenAuth.setup do |config|
   # By default, users will need to re-authenticate after 2 weeks. This setting
   # determines how long tokens will remain valid after they are issued.
   config.token_lifespan = 2.weeks
-
+  default_confirm_success_url = "http://127.0.0.1:3000/welcome"
+  redirect_whitelist =["http://127.0.0.1:3000/welcome"]
   # Sometimes it's necessary to make several requests to the API at the same
   # time. In this case, each request in the batch will need to share the same
   # auth token. This setting determines how far apart the requests can be while
