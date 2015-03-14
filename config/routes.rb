@@ -14,9 +14,17 @@ Rails.application.routes.draw do
   #end
 
 
-  resources :weighings, :only => [:index, :create, :update, :destroy, :show]
+  resources :weighings, :only => [:index,  :create, :update, :destroy, :show]
   resources :user_data, :only => [:create, :update, :show]
-
+  resources :diets,     :only => [:index,  :create, :update, :destroy, :show]
+  resources :programs,  :only => [:index,  :create, :update, :destroy, :show]
+  resources :measurements
+  resources :groups
+  resources :scales
+  resources :families
+  resources :devices
+  resources :activity_levels
+  resources :activity_types
   as :company do
     # Define routes for Company within this block.
   end

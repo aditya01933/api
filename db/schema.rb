@@ -11,7 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150309171724) do
+ActiveRecord::Schema.define(version: 20150314185740) do
+
+  create_table "activity_levels", force: :cascade do |t|
+    t.string   "name"
+    t.float    "correction"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "activity_types", force: :cascade do |t|
+    t.string   "name"
+    t.float    "correction"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -89,10 +103,75 @@ ActiveRecord::Schema.define(version: 20150309171724) do
   add_index "companies", ["reset_password_token"], name: "index_companies_on_reset_password_token", unique: true
   add_index "companies", ["uid", "provider"], name: "index_companies_on_uid_and_provider", unique: true
 
+  create_table "devices", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "device_type"
+    t.string   "name"
+    t.string   "device_string"
+    t.string   "device_params"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  create_table "diets", force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.string   "copyright"
+    t.string   "image"
+    t.integer  "rate"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "families", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "name"
+    t.boolean  "show_all_data"
+    t.boolean  "allow_comments"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  create_table "groups", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "measurements", force: :cascade do |t|
+    t.string   "name"
+    t.float    "correction"
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "programs", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "name"
+    t.text     "comment"
+    t.decimal  "init"
+    t.decimal  "goal"
+    t.datetime "init_date"
+    t.datetime "goal_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "scales", force: :cascade do |t|
+    t.integer  "device_id"
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "user_data", force: :cascade do |t|
     t.integer  "user_id"
     t.datetime "birthday"
-    t.decimal  "heigh"
+    t.integer  "heigh"
     t.integer  "country"
     t.string   "sex"
     t.string   "body_frame"
@@ -135,12 +214,14 @@ ActiveRecord::Schema.define(version: 20150309171724) do
 
   create_table "weighings", force: :cascade do |t|
     t.integer  "user_id"
+    t.integer  "program_id"
+    t.integer  "activity_id"
     t.float    "weigh"
-    t.decimal  "body_fat"
-    t.decimal  "body_water"
-    t.decimal  "muscle_mass"
-    t.decimal  "physique_rating"
-    t.decimal  "basal_metabolic_rate"
+    t.float    "body_fat"
+    t.float    "body_water"
+    t.float    "muscle_mass"
+    t.float    "physique_rating"
+    t.float    "basal_metabolic_rate"
     t.integer  "metabolic_age"
     t.float    "bone_mass"
     t.float    "viscerial_fat"

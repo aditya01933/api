@@ -4,4 +4,7 @@ class Coach < ActiveRecord::Base
           :recoverable, :rememberable, :trackable, :validatable,
           :confirmable, :omniauthable
   include DeviseTokenAuth::Concerns::User
+  has_many :users
+  belongs_to :company
+  belongs_to :group
 end

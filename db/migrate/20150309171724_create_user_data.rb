@@ -3,7 +3,7 @@ class CreateUserData < ActiveRecord::Migration
     create_table :user_data do |t|
       t.integer  :user_id
       t.datetime :birthday
-      t.decimal  :heigh
+      t.integer  :heigh
       t.integer  :country
       t.string   :sex
       t.string   :body_frame
